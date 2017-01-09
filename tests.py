@@ -65,5 +65,61 @@ class FormatPriceTestCase(unittest.TestCase):
         out = format_price('33 333.55745567645')
         self.assertEqual(out, '33 333.56')
 
+    def test_with_10_and_001(self):
+        out = format_price('10.001')
+        self.assertEqual(out, '10')
+
+    def test_with_10_and_01(self):
+        out = format_price('10.01')
+        self.assertEqual(out, '10.01')
+
+    def test_with_error_whole_1(self):
+        out = format_price('10s.01')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_whole_1(self):
+        out = format_price('s10.01')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_whole_2(self):
+        out = format_price('s1s0.0001')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_whole_3(self):
+        out = format_price('sasd')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_frac_1(self):
+        out = format_price('1000.s')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_frac_1(self):
+        out = format_price('1000.s')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_frac_2(self):
+        out = format_price('1000.000s')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_frac_3(self):
+        out = format_price('0.axs')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_whole_and_frac(self):
+        out = format_price('x.s')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_empty_field(self):
+        out = format_price('   ')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_double_dot(self):
+        out = format_price('12.33.2')
+        self.assertEqual(out, 'Error')
+
+    def test_with_error_dash(self):
+        out = format_price('12-15-')
+        self.assertEqual(out, 'Error')
+
 if __name__ == '__main__':
     unittest.main()
