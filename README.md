@@ -17,6 +17,8 @@ it in your code.
 
     The function takes your price with commas, dots and spaces. If there is something else it returns `None`
 
+If input price is incorrect it will return value this var: `PRICE_FORMATTING_FAIL`
+
 # Project Goals
 
 The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)

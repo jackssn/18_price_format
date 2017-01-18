@@ -1,6 +1,6 @@
 import unittest
 
-from format_price import format_price
+from format_price import format_price, PRICE_FORMATTING_FAIL
 
 
 class FormatPriceTestCase(unittest.TestCase):
@@ -75,51 +75,51 @@ class FormatPriceTestCase(unittest.TestCase):
 
     def test_with_error_whole_1(self):
         out = format_price('10s.01')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_whole_1(self):
         out = format_price('s10.01')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_whole_2(self):
         out = format_price('s1s0.0001')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_whole_3(self):
         out = format_price('sasd')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_frac_1(self):
         out = format_price('1000.s')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_frac_1(self):
         out = format_price('1000.s')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_frac_2(self):
         out = format_price('1000.000s')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_frac_3(self):
         out = format_price('0.axs')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_whole_and_frac(self):
         out = format_price('x.s')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_empty_field(self):
         out = format_price('   ')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_double_dot(self):
         out = format_price('12.33.2')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_error_dash(self):
         out = format_price('12-15-')
-        self.assertEqual(out, 'Error')
+        self.assertEqual(out, PRICE_FORMATTING_FAIL)
 
     def test_with_1_and_many_zeros(self):
         out = format_price('1.00000')

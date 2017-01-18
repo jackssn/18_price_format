@@ -2,6 +2,9 @@ import argparse
 import textwrap
 
 
+PRICE_FORMATTING_FAIL = 'Error'
+
+
 def format_price(price):
     price_str = str(price).replace(' ', '')
     price_without_fraction = get_whole_part(price_str)
@@ -14,7 +17,7 @@ def format_price(price):
             if is_split_on_two_part(price_parts):
                 whole_part, frac_part = price_parts
                 return create_pretty_price(whole_part, frac_part)
-        return error_msg()
+        return PRICE_FORMATTING_FAIL
 
 
 def create_pretty_price(integer_str, fraction_str):
@@ -22,7 +25,7 @@ def create_pretty_price(integer_str, fraction_str):
     whole_part = get_whole_part(integer_str, whole_adding)
     out = ''
     if not whole_part or not fraction_part:
-        return error_msg()
+        return PRICE_FORMATTING_FAIL
     if whole_part:
         out += whole_part
     if fraction_part != '0':
@@ -55,10 +58,6 @@ def get_frac_part(number):
 
 def is_split_on_two_part(sample):
     return len(sample) == 2
-
-
-def error_msg():
-    return 'Error'
 
 
 if __name__ == '__main__':
