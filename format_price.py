@@ -1,26 +1,28 @@
 import argparse
 import textwrap
-import math
+
 
 def format_price(price):
-    price = str(price).replace(' ', '')
-    if get_whole_part(price):
-        return get_whole_part(price)
+    price_str = str(price).replace(' ', '')
+    price_without_fraction = get_whole_part(price_str)
+    if price_without_fraction:
+        return price_without_fraction
     else:
         separators = [',', '.']
         for separator in separators:
-            if is_split_on_two_part(price.split(separator)):
-                whole_part, frac_part = price.split(separator)
+            price_parts = price_str.split(separator)
+            if is_split_on_two_part(price_parts):
+                whole_part, frac_part = price_parts
                 return create_pretty_price(whole_part, frac_part)
-        return 'Error'
+        return error_msg()
 
 
-def create_pretty_price(integer, fraction):
-    fraction_part = get_frac_part(fraction)
-    whole_part = get_whole_part(integer)
+def create_pretty_price(integer_str, fraction_str):
+    whole_adding, fraction_part = get_frac_part(fraction_str)
+    whole_part = get_whole_part(integer_str, whole_adding)
     out = ''
     if not whole_part or not fraction_part:
-        return 'Error'
+        return error_msg()
     if whole_part:
         out += whole_part
     if fraction_part != '0':
@@ -35,9 +37,9 @@ def get_spaces(integer):
     return None
 
 
-def get_whole_part(number):
+def get_whole_part(number, adding_from_frac_part=0):
     try:
-        return get_spaces(int(number))
+        return get_spaces(int(number)+int(adding_from_frac_part))
     except ValueError:
         return None
 
@@ -46,17 +48,21 @@ def get_frac_part(number):
     try:
         fraction = float('0.%s' % number)
         fraction_rounded_str = str(round(fraction, 2))
-        return fraction_rounded_str[2:]
+        return fraction_rounded_str[0], fraction_rounded_str[2:]
     except ValueError:
-        return None
+        return 0, None
 
 
 def is_split_on_two_part(sample):
     return len(sample) == 2
 
 
+def error_msg():
+    return 'Error'
+
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Format price')
-    parser.add_argument('price', type=str, help='a digit for the change')
+    parser = argparse.ArgumentParser(description='Format price_str')
+    parser.add_argument('price_str', type=str, help='a digit for the change')
     args = parser.parse_args()
-    print(format_price(args.price))
+    print(format_price(args.price_str))

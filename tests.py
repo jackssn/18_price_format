@@ -121,5 +121,13 @@ class FormatPriceTestCase(unittest.TestCase):
         out = format_price('12-15-')
         self.assertEqual(out, 'Error')
 
+    def test_with_1_and_many_zeros(self):
+        out = format_price('1.00000')
+        self.assertEqual(out, '1')
+
+    def test_with_2_and_many_nines(self):
+        out = format_price('1.999999')
+        self.assertEqual(out, '2')
+
 if __name__ == '__main__':
     unittest.main()
